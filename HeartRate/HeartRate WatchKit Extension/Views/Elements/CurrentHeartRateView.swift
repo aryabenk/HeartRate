@@ -11,7 +11,7 @@ struct CurrentHeartRateView: View {
     var value: Int
     var units = "BPM"
     
-    @State var isAnimate = false
+    @State var isAnimating = false
     
     var body: some View {
         HStack(spacing: 8) {
@@ -25,14 +25,12 @@ struct CurrentHeartRateView: View {
                     .resizable()
                     .font(Font.system(.largeTitle).bold())
                     .frame(width: 16, height: 16)
-                    .scaleEffect(self.isAnimate ? 1 : 0.8)
-                    .animation(.easeInOut)
+                    .scaleEffect(self.isAnimating ? 1 : 0.8)
+                    .animation(Animation.linear(duration: 0.5).repeatForever())
             }
         }
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) {_ in
-                self.isAnimate.toggle()
-            }
+            self.isAnimating = true
         }
     }
 }
